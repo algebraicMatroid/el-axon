@@ -8,6 +8,7 @@ RUN set -eux; \
     apt-get install -y --no-install-recommends \
         cmake \
         clang \
+        libclang-dev \
         llvm \
         gcc; \
     rm -rf /var/lib/apt/lists/*
