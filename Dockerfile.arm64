@@ -8,15 +8,15 @@ RUN set -eux; \
     apt-get install -y --no-install-recommends \
         cmake \
         clang \
-        libclang-dev \
         llvm \
+        libclang-dev \
         gcc; \
     rm -rf /var/lib/apt/lists/*
 
 RUN cd /build && cargo build --release
 
 
-FROM debian:bookworm-20230612-slim
+FROM debian:bookworm-slim
 
 RUN apt-get update \
  && apt-get install -y --no-install-recommends curl jq \
@@ -25,9 +25,9 @@ RUN apt-get update \
 WORKDIR /app
 
 COPY --from=builder \
-  /usr/lib/x86_64-linux-gnu/libssl.so.* \
-  /usr/lib/x86_64-linux-gnu/libcrypto.so.* \
-  /usr/lib/x86_64-linux-gnu/
+  /usr/lib/aarch64-linux-gnu/libssl.so.* \
+  /usr/lib/aarch64-linux-gnu/libcrypto.so.* \
+  /usr/lib/aarch64-linux-gnu/
 COPY --from=builder /build/target/release/axon /app/axon
 COPY --from=builder /build/devtools /app/devtools
 
