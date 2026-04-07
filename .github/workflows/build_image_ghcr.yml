@@ -3,9 +3,6 @@ name: Build ghcr.io image
 on:
   workflow_dispatch:
 
-env:
-  IMAGE: ghcr.io/${{ github.repository_owner }}/axon
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,6 +12,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
+    - name: Set image name
+      run: echo "IMAGE=ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/axon" >> "$GITHUB_ENV"
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
